@@ -1,0 +1,12 @@
+server:
+    port: 5020
+    OFFSET_REGISTERS: 0
+    UNIT_ID: 0x1
+    byte_order: little
+    word_order: little
+    float_registers: {signal_strength: 0}
+    #int32_registers: {test_count: 2}
+    int32_registers: {}
+    #registers: {signal_strength:[0,32int]}
+    #float_registers: {signal_strength:0}
+    float_registers: {signal_strength: 0,flow_rate: 2,net_total: 4,positive_totalizer: 6,negative_totalizer: 8,temp1: 10}
