@@ -32,6 +32,7 @@ from twisted.internet.task import LoopingCall
 import logging
 import yaml
 import random
+import argparse
 from struct import *
 
 logging.basicConfig()
@@ -139,13 +140,15 @@ def write_32int(context_in,address,value,slave_id=0x0):
 
 
 
-def run_updating_server(config_section=None):
+def run_updating_server(config_in, config_section=None):
     # ----------------------------------------------------------------------- #
     # initialize your data store
     # ----------------------------------------------------------------------- #
     if (config_section==None):
         modbus_section = 'server'
-    with open('config.yaml') as f:
+
+
+    with open(config_in) as f:
         # use safe_load instead load
         modbusConfig = yaml.safe_load(f)
 
@@ -183,11 +186,22 @@ def run_updating_server(config_section=None):
     # ----------------------------------------------------------------------- #
     # run the server you want
     # ----------------------------------------------------------------------- #
-    time = 20  # 5 seconds delay
+    time = 20  
     loop = LoopingCall(f=updating_writer, a=(context,),registers_float=(registers_float),registers_int=(registers_int))
     loop.start(time, now=False) # initially delay by time
     StartTcpServer(context, identity=identity, address=("0.0.0.0", 5020))
     write_float(context,0,23.73)
 
 if __name__ == "__main__":
-    run_updating_server()
+    # read arguments passed at .py file call
+    # only argument is the yaml config file which specifies all the details
+    # for connecting to the modbus device as well the local and remote
+    # influx databases
+    parser = argparse.ArgumentParser()
+    parser.add_argument("config", help="config file")
+
+    args = parser.parse_args()
+    config_file = args.config
+    #print(config_file)
+
+    run_updating_server(config_in=config_file)
