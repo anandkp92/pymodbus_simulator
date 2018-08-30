@@ -62,7 +62,7 @@ import logging
 
 logging.basicConfig()
 log = logging.getLogger()
-log.setLevel(logging.DEBUG)
+# log.setLevel(logging.DEBUG)
 
 
 class Modbus_Driver(object):
@@ -130,8 +130,8 @@ class Modbus_Driver(object):
         return response
 
     def read_register_raw(self,register,length):
-        print(register)
-        print(length)
+        # print(register)
+        # print(length)
         response = self.client.read_holding_registers(register,length,unit= self.UNIT_ID)
         return response
 
