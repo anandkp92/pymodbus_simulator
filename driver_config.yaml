@@ -1,0 +1,72 @@
+modbus:
+    modbus_type: tcp
+    ip: 127.0.0.1
+    port: 5020
+    byte_order: little
+    word_order: little
+    UNIT_ID: 0x0
+    OFFSET_REGISTERS: 0
+    registers: {
+        heartbeat: [0,32int],
+        real_power_setpoint: [2,32float],
+        reactive_power_setpoint: [4,32float],
+        target_real_power: [6,32float],
+        target_reactive_power: [8,32float],
+        battery_total_capacity: [10,32float],
+        battery_current_stored_energy: [12,32float],
+        total_actual_real_power: [14,32float],
+        total_actual_reactive_power: [16,32float],
+        total_actual_apparent_power: [18,32float],
+
+        active_power_output_limit: [20,32float],
+        current_power_production: [22,32float],
+        ac_current_phase_a: [24,32float],
+        ac_current_phase_b: [26,32float],
+        ac_current_phase_c: [28,32float],
+        ac_voltage_ab: [30,32float],
+        ac_voltage_bc: [32,32float],
+        ac_voltage_ca: [34,32float],
+        ac_frequency: [36,32float],
+        
+        islanding_state: [38,32int],
+        island_type: [40,32int],
+        bess_availability: [42,32int],
+        fault_condition: [44,32int],
+        pge_state: [46,32int],
+        pcc_breaker_state: [48,32int],
+        pge_voltage: [50,32float],
+        pge_frequency: [52,32float],
+        bess_pv_breaker_state: [54,32int]
+    }
+
+local_database_config:
+    host: localhost
+    database: local_sensor
+    protocol: json
+    port: 9003
+    use_ssl: False
+    verify_ssl_is_on: False
+    measurement_name: islanding_controller
+    username: admin
+    password: password
+    tags: [sensor_id]
+    sensor_id: sensor1
+    fields: [heartbeat, reactive_power_setpoint, reactive_power_setpoint, target_reactive_power, battery_total_capacity, battery_current_stored_energy, total_actual_real_power, total_actual_reactive_power, total_actual_reactive_power, 
+            active_power_output_limit, current_power_production, ac_current_phase_a, ac_current_phase_b, ac_current_phase_c, ac_voltage_ab, ac_voltage_bc, ac_voltage_ca, ac_frequency,
+            islanding_state, island_type, bess_availability, fault_condition, pge_state, pcc_breaker_state, pge_voltage, pge_frequency, bess_pv_breaker_state]
+
+remote_database_config:
+    host: localhost
+    database: remote_sensor
+    protocol: json
+    port: 9003
+    use_ssl: False
+    verify_ssl_is_on: False
+    measurement_name: islanding_controller
+    username: admin
+    password: password
+    tags: [sensor_id]
+    sensor_id: sensor1
+    fields: [heartbeat, reactive_power_setpoint, reactive_power_setpoint, target_reactive_power, battery_total_capacity, battery_current_stored_energy, total_actual_real_power, total_actual_reactive_power, total_actual_reactive_power, 
+            active_power_output_limit, current_power_production, ac_current_phase_a, ac_current_phase_b, ac_current_phase_c, ac_voltage_ab, ac_voltage_bc, ac_voltage_ca, ac_frequency,
+            islanding_state, island_type, bess_availability, fault_condition, pge_state, pcc_breaker_state, pge_voltage, pge_frequency, bess_pv_breaker_state]

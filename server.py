@@ -57,7 +57,7 @@ class Modbus_Device_Simulator():
     def write_float(self, context_in, address, value, slave_id=0x0):
 
         context = context_in[0]
-        register = 3
+        register = 3 # for holding regsiter
         slave_id = slave_id
 
         i1, i2 = unpack('>HH',pack('f',value))
@@ -67,7 +67,7 @@ class Modbus_Device_Simulator():
     def write_int32(self, context_in, address, value, slave_id=0x0):
 
         context = context_in[0]
-        register = 3
+        register = 3 # for holding regsiter
         slave_id = slave_id
         i1, i2 = unpack('>HH',pack('i',value))
         values = [i1, i2]
@@ -80,14 +80,35 @@ class Modbus_Device_Simulator():
             # self.write_float(self.context, reg_address, 120)
 
         for the_key, reg_address in self.registers_int32.items():
-            new_val = random.randint(501,1000)
+            if the_key == "heartbeat": 
+                possible_values = [0x55AA, 0xAA55, 0]
+                new_val = possible_values[random.randint(0,2)]
+            elif the_key == "islanding_state":
+                new_val = bool(random.getrandbits(1))
+            elif the_key == "island_type":
+                new_val = bool(random.getrandbits(1))
+            elif the_key == "bess_availability":
+                new_val = bool(random.getrandbits(1))
+            elif the_key == "pge_state":
+                new_val = bool(random.getrandbits(1))
+            elif the_key == "pcc_breaker_state":
+                new_val = bool(random.getrandbits(1))
+            elif the_key == "bess_pv_breaker_state":
+                new_val = bool(random.getrandbits(1))
+            elif the_key == "ac_frequency":
+                new_val = 60
+            elif the_key == "fault_condition":
+                new_val = random.randint(0,10)
+            else:
+                new_val = random.randint(501,1000)
             self.write_int32(self.context,reg_address,new_val)
             # self.write_int32(self.context, reg_address, 5)
 
 if __name__ == '__main__':
-    modbus_dev = Modbus_Device_Simulator()
+    modbus_dev = Modbus_Device_Simulator(config_file='server_config.yaml')
     modbus_dev.create_slave_context()
     modbus_dev.create_slave_identity()
     # modbus_dev.update_with_random_values()
-    modbus_dev.set_up_looping_calls(time = 5)
+    modbus_dev.set_up_looping_calls(time = 2)
+    print("starting the server.. ")
     modbus_dev.create_server()

@@ -1,0 +1,36 @@
+server:
+    port: 5020
+    int32_registers: {
+        heartbeat: 0,
+        islanding_state: 38,
+        island_type: 40,
+        bess_availability: 42,
+        fault_condition: 44,
+        pge_state: 46,
+        pcc_breaker_state: 48,
+        bess_pv_breaker_state: 54
+    }
+    float_registers: {
+        real_power_setpoint: 2,
+        reactive_power_setpoint: 4, 
+        target_real_power: 6, 
+        target_reactive_power: 8, 
+        battery_total_capacity: 10,
+        battery_current_stored_energy: 12,
+        total_actual_real_power: 14,
+        total_actual_reactive_power: 16,
+        total_actual_apparent_power: 18,
+
+        active_power_output_limit: 20,
+        current_power_production: 22,
+        ac_current_phase_a: 24,
+        ac_current_phase_b: 26,
+        ac_current_phase_c: 28,
+        ac_voltage_ab: 30,
+        ac_voltage_bc: 32,
+        ac_voltage_ca: 34,
+        ac_frequency: 36,
+        
+        pge_voltage: 50,
+        pge_frequency: 52
+    }
